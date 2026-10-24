@@ -1,13 +1,13 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#define WIFI_SSID ""
-#define WIFI_PASSWORD ""
 #define USE_SERIAL 1
 #define LED_PIN 13
 
-// Timezone information for Wrocław, Poland
-#define GMT_OFFSET_SEC 3600      // 1 hour offset (CET)
-#define DAYLIGHT_OFFSET_SEC 3600 // Additional 1 hour for daylight saving (CEST)
+// WiFi and timezone are set from the setup portal on first boot, not here.
+// Optional overrides:
+// #define SETUP_AP_NAME "WordClock-Setup"            // Name of the setup WiFi network
+// #define SETUP_BUTTON_PIN 0                         // Hold 3 s to reopen the setup portal
+// #define DEFAULT_TIMEZONE "EST5EDT,M3.2.0,M11.1.0"  // Used until a timezone is chosen
 
 #endif
