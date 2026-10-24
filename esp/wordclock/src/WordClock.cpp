@@ -107,6 +107,21 @@ void WordClock::displayTime()
     highlightWord("IS", getRandomColor());
     String allHighlightedWords = "ITIS";
 
+    // Special case: at 3:10 (AM and PM) show "IT IS MISH O'CLOCK"
+    if (hour == 3 && minute == 10)
+    {
+        highlightWord("MISH", getRandomColor());
+        highlightWord("OCLOCK", getRandomColor());
+        allHighlightedWords += "MISHOCLOCK";
+
+        if (allLastHighlightedWords != allHighlightedWords)
+        {
+            clockDisplayHAL->show();
+            allLastHighlightedWords = allHighlightedWords;
+        }
+        return;
+    }
+
     if (minute < 5)
     {
         highlightWord("OCLOCK", getRandomColor());

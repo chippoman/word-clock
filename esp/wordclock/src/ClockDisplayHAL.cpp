@@ -23,6 +23,7 @@ ClockDisplayHAL::WordMapping const ClockDisplayHAL::WORDS_TO_LEDS[] = {
     {"FIVE", 98, 101},
     {"TEN", 91, 93},
     {"FIFTEEN", 110, 116},
+    {"MISH", 120, 123},
     {"IS", 127, 128},
     {"IT", 130, 131}};
 
