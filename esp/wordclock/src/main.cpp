@@ -6,7 +6,7 @@
 #include "GifPlayer.h"
 #include "WordClock.h"
 
-NetworkManager networkManager;
+ClockNetworkManager networkManager;
 ClockDisplayHAL clockDisplayHAL(LED_PIN, 255);
 GifPlayer gifPlayer(&clockDisplayHAL);
 WordClock wordClock(&clockDisplayHAL, &networkManager, &gifPlayer);

@@ -6,10 +6,10 @@
 #include <HTTPClient.h>
 #include <Preferences.h>
 
-class NetworkManager
+class ClockNetworkManager
 {
 public:
-    NetworkManager();
+    ClockNetworkManager();
     void setup();
     void update();
     struct tm getLocalTimeStruct();

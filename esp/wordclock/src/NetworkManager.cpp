@@ -53,10 +53,10 @@ static const TimezoneOption TIMEZONES[] = {
     {"New Zealand (Auckland)", "NZST-12NZDT,M9.5.0,M4.1.0/3"},
 };
 
-NetworkManager::NetworkManager()
+ClockNetworkManager::ClockNetworkManager()
     : lastSyncTime(0), setupButtonPressedSince(0), gifBuffer(nullptr), gifBufferSize(0) {}
 
-void NetworkManager::setup()
+void ClockNetworkManager::setup()
 {
     pinMode(SETUP_BUTTON_PIN, INPUT_PULLUP);
     loadTimezone();
@@ -71,7 +71,7 @@ void NetworkManager::setup()
     syncTimeWithNTP();
 }
 
-void NetworkManager::update()
+void ClockNetworkManager::update()
 {
     checkSetupButton();
 
@@ -82,7 +82,7 @@ void NetworkManager::update()
     }
 }
 
-void NetworkManager::checkSetupButton()
+void ClockNetworkManager::checkSetupButton()
 {
     if (digitalRead(SETUP_BUTTON_PIN) != LOW)
     {
@@ -103,7 +103,7 @@ void NetworkManager::checkSetupButton()
     }
 }
 
-void NetworkManager::runSetupPortal(bool onDemand)
+void ClockNetworkManager::runSetupPortal(bool onDemand)
 {
     WiFiManager wifiManager;
     wifiManager.setDebugOutput(USE_SERIAL);
@@ -150,7 +150,7 @@ void NetworkManager::runSetupPortal(bool onDemand)
     }
 }
 
-String NetworkManager::buildTimezoneSelectHtml()
+String ClockNetworkManager::buildTimezoneSelectHtml()
 {
     String html = "<label for='tzsel'>Timezone</label>"
                   "<select id='tzsel' onchange=\"if(this.value)document.getElementById('tz').value=this.value\">";
@@ -166,14 +166,14 @@ String NetworkManager::buildTimezoneSelectHtml()
     return html;
 }
 
-void NetworkManager::loadTimezone()
+void ClockNetworkManager::loadTimezone()
 {
     preferences.begin("wordclock", true);
     timezoneSetting = preferences.getString("tz", DEFAULT_TIMEZONE);
     preferences.end();
 }
 
-void NetworkManager::saveTimezone(const String &tz)
+void ClockNetworkManager::saveTimezone(const String &tz)
 {
     timezoneSetting = tz;
     preferences.begin("wordclock", false);
@@ -182,7 +182,7 @@ void NetworkManager::saveTimezone(const String &tz)
     SERIAL_PRINTLN("Timezone saved: " + timezoneSetting);
 }
 
-void NetworkManager::syncTimeWithNTP()
+void ClockNetworkManager::syncTimeWithNTP()
 {
     configTzTime(timezoneSetting.c_str(), "pool.ntp.org");
 
@@ -194,7 +194,7 @@ void NetworkManager::syncTimeWithNTP()
     lastSyncTime = millis();
 }
 
-struct tm NetworkManager::getLocalTimeStruct()
+struct tm ClockNetworkManager::getLocalTimeStruct()
 {
     struct tm timeinfo;
     if (getLocalTime(&timeinfo))
@@ -209,7 +209,7 @@ struct tm NetworkManager::getLocalTimeStruct()
     }
 }
 
-bool NetworkManager::downloadGIF(const char *gifUrl)
+bool ClockNetworkManager::downloadGIF(const char *gifUrl)
 {
     if (WiFi.status() == WL_CONNECTED)
     {
@@ -247,7 +247,7 @@ bool NetworkManager::downloadGIF(const char *gifUrl)
     }
 }
 
-uint8_t *NetworkManager::handleDownloadGIFResponse(HTTPClient &http, int gifSize)
+uint8_t *ClockNetworkManager::handleDownloadGIFResponse(HTTPClient &http, int gifSize)
 {
     WiFiClient *stream = http.getStreamPtr();
 
@@ -279,12 +279,12 @@ uint8_t *NetworkManager::handleDownloadGIFResponse(HTTPClient &http, int gifSize
     }
 }
 
-uint8_t *NetworkManager::getGifBuffer()
+uint8_t *ClockNetworkManager::getGifBuffer()
 {
     return gifBuffer;
 }
 
-size_t NetworkManager::getGifBufferSize()
+size_t ClockNetworkManager::getGifBufferSize()
 {
     return gifBufferSize;
 }

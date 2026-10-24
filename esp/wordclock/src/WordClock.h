@@ -9,7 +9,7 @@
 class WordClock
 {
 public:
-    WordClock(ClockDisplayHAL *clockDisplayHAL, NetworkManager *networkManager, GifPlayer *gifPlayer);
+    WordClock(ClockDisplayHAL *clockDisplayHAL, ClockNetworkManager *networkManager, GifPlayer *gifPlayer);
     void setup();
     void displayTime();
 
@@ -17,7 +17,7 @@ private:
     int lastHour;
     String allLastHighlightedWords;
     ClockDisplayHAL *clockDisplayHAL;
-    NetworkManager *networkManager;
+    ClockNetworkManager *networkManager;
     GifPlayer *gifPlayer;
     bool gifDownloaded;
 
