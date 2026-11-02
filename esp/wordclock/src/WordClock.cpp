@@ -11,7 +11,7 @@ const uint32_t COLORS[] = {
     0xFFFFFF,
     0xA52A2A};
 
-WordClock::WordClock(ClockDisplayHAL *clockDisplayHAL, NetworkManager *networkManager, GifPlayer *gifPlayer)
+WordClock::WordClock(ClockDisplayHAL *clockDisplayHAL, ClockNetworkManager *networkManager, GifPlayer *gifPlayer)
     : clockDisplayHAL(clockDisplayHAL), networkManager(networkManager), gifPlayer(gifPlayer), lastHour(-1), allLastHighlightedWords(""), gifDownloaded(false) {}
 
 void WordClock::setup()

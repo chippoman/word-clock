@@ -4,11 +4,12 @@
 #include <WiFi.h>
 #include <time.h>
 #include <HTTPClient.h>
+#include <Preferences.h>
 
-class NetworkManager
+class ClockNetworkManager
 {
 public:
-    NetworkManager(char *ssid, char *password, long gmtOffset_sec, int daylightOffset_sec);
+    ClockNetworkManager();
     void setup();
     void update();
     struct tm getLocalTimeStruct();
@@ -17,15 +18,19 @@ public:
     size_t getGifBufferSize();
 
 private:
-    char *ssid;
-    char *password;
-    long gmtOffset_sec;
-    int daylightOffset_sec;
+    Preferences preferences;
+    String timezoneSetting;
     unsigned long lastSyncTime;
     const unsigned long syncInterval = 86400000;
+    unsigned long setupButtonPressedSince;
     uint8_t *gifBuffer = nullptr;
     size_t gifBufferSize = 0;
 
+    void runSetupPortal(bool onDemand);
+    void checkSetupButton();
+    void loadTimezone();
+    void saveTimezone(const String &tz);
+    String buildTimezoneSelectHtml();
     void syncTimeWithNTP();
     uint8_t *handleDownloadGIFResponse(HTTPClient &http, int gifSize);
 };
